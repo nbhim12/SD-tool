@@ -1,73 +1,138 @@
-# React + TypeScript + Vite
+# IGBC Green Homes Certification Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive feasibility assessment tool for IGBC Green Homes Certification, helping sustainability consultants evaluate green building certification requirements.
 
-Currently, two official plugins are available:
+## 🏗️ Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS
+- **Backend:** Node.js + Express + TypeScript
+- **Database:** MongoDB + Mongoose
+- **State Management:** Zustand
+- **PDF Generation:** PDFKit
 
-## React Compiler
+## 📁 Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── components/     # UI Components
+│   │   ├── hooks/          # Custom React Hooks
+│   │   ├── services/       # API Services
+│   │   ├── store/          # Zustand State Store
+│   │   ├── types/          # TypeScript Types
+│   │   └── utils/          # Utility Functions
+│   └── package.json
+│
+├── server/                 # Express Backend
+│   ├── src/
+│   │   ├── controllers/    # Route Controllers
+│   │   ├── models/         # Mongoose Models
+│   │   ├── routes/         # API Routes
+│   │   ├── services/       # Business Logic
+│   │   └── utils/          # Utility Functions
+│   └── package.json
+│
+├── shared/                 # Shared Code
+│   ├── types/              # Shared TypeScript Interfaces
+│   └── data/               # IGBC Data (Categories, Credits)
+│
+└── package.json            # Root Monorepo Config
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🚀 Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Node.js >= 18.0.0
+- MongoDB (local or Atlas)
+- npm or yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd SD-tool
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm run install:all
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   # Server
+   cp server/.env.example server/.env
+   # Edit server/.env with your MongoDB URI
+   ```
+
+4. **Seed the database (optional)**
+   ```bash
+   npm run seed
+   ```
+
+5. **Start development servers**
+   ```bash
+   npm run dev
+   ```
+
+   This will start:
+   - Frontend: http://localhost:5173
+   - Backend: http://localhost:5000
+
+## 📊 IGBC Green Homes Categories
+
+| Category | Code | Points |
+|----------|------|--------|
+| Sustainable Design | SD | 20 |
+| Water Conservation | WC | 23 |
+| Energy Efficiency | EE | 20 |
+| Materials and Resources | MR | 18 |
+| Resident Health & Wellbeing | RHW | 14 |
+| Innovation & Design | ID | 5 |
+| **Total** | | **100** |
+
+## 🏆 Certification Levels
+
+| Level | Points Required |
+|-------|-----------------|
+| Certified | 40-49 |
+| Silver | 50-59 |
+| Gold | 60-74 |
+| Platinum | 75-100 |
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/categories` | Get all categories with credits |
+| GET | `/api/scenarios` | List saved scenarios |
+| GET | `/api/scenarios/:id` | Get single scenario |
+| POST | `/api/scenarios` | Create new scenario |
+| PUT | `/api/scenarios/:id` | Update scenario |
+| DELETE | `/api/scenarios/:id` | Delete scenario |
+| GET | `/api/scenarios/:id/pdf` | Download PDF report |
+
+## 📝 Features
+
+- [x] Project structure & setup
+- [ ] Category navigation with tabs
+- [ ] Credit display with point distribution
+- [ ] Yes/Maybe/No point allocation
+- [ ] Notes per credit
+- [ ] Certification level selection
+- [ ] Save/Load scenarios
+- [ ] PDF export
+
+## 🎯 Design Decisions
+
+1. **Monorepo Structure:** Easier to share types between frontend and backend
+2. **Zustand for State:** Lightweight and TypeScript-friendly
+3. **Tab Navigation:** Top navigation for categories as per requirements
+4. **Responsive Design:** Mobile-first approach with Tailwind CSS
+
+## 📄 License
+
+MIT

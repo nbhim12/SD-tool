@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
+import { connectDB } from './config';
 
 // Load environment variables
 dotenv.config();
@@ -18,26 +18,33 @@ app.use(express.json());
 
 // Health check route
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'IGBC Tool API is running' });
+  res.json({ 
+    status: 'ok', 
+    message: 'IGBC Tool API is running',
+    timestamp: new Date().toISOString()
+  });
 });
 
 // TODO: Add routes in PR 3
 // app.use('/api/categories', categoryRoutes);
 // app.use('/api/scenarios', scenarioRoutes);
 
-// MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/igbc-tool';
-
-mongoose.connect(MONGODB_URI)
-  .then(() => {
-    console.log('✅ Connected to MongoDB');
+// Start server
+const startServer = async () => {
+  try {
+    // Connect to MongoDB
+    await connectDB();
+    
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log( Server running on http://localhost:\);
+      console.log( Health check: http://localhost:\/api/health);
     });
-  })
-  .catch((error) => {
-    console.error('❌ MongoDB connection error:', error);
+  } catch (error) {
+    console.error(' Failed to start server:', error);
     process.exit(1);
-  });
+  }
+};
+
+startServer();
 
 export default app;

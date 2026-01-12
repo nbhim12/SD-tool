@@ -1,0 +1,413 @@
+{
+  "categories": [
+    {
+      "id": "sd",
+      "code": "SD",
+      "name": "Sustainable Design",
+      "possiblePoints": 20,
+      "mandatoryRequirements": [
+        {
+          "id": "sd-mr-1",
+          "code": "SD MR 1",
+          "name": "Local Building Regulations",
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-mr-2",
+          "code": "SD MR 2",
+          "name": "Soil Erosion Control",
+          "categoryCode": "SD"
+        }
+      ],
+      "credits": [
+        {
+          "id": "sd-cr-1",
+          "code": "SD Credit 1",
+          "name": "Natural Topography & Vegetation",
+          "maxPoints": 4,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-2",
+          "code": "SD Credit 2",
+          "name": "Heat Island Effect, Roof & Non-roof",
+          "maxPoints": 4,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-3",
+          "code": "SD Credit 3",
+          "name": "Passive Architecture",
+          "maxPoints": 2,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-4",
+          "code": "SD Credit 4",
+          "name": "Universal Design",
+          "maxPoints": 2,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-5",
+          "code": "SD Credit 5",
+          "name": "Green Parking Facility",
+          "maxPoints": 4,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-6",
+          "code": "SD Credit 6",
+          "name": "Access to Amenities",
+          "maxPoints": 2,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-7",
+          "code": "SD Credit 7",
+          "name": "Basic Facilities for Construction Workforce",
+          "maxPoints": 1,
+          "categoryCode": "SD"
+        },
+        {
+          "id": "sd-cr-8",
+          "code": "SD Credit 8",
+          "name": "Green Education & Awareness",
+          "maxPoints": 1,
+          "categoryCode": "SD"
+        }
+      ]
+    },
+    {
+      "id": "wc",
+      "code": "WC",
+      "name": "Water Conservation",
+      "possiblePoints": 23,
+      "mandatoryRequirements": [
+        {
+          "id": "wc-mr-1",
+          "code": "WC MR 1",
+          "name": "Water Efficient Plumbing Fixtures",
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-mr-2",
+          "code": "WC MR 2",
+          "name": "Rainwater Harvesting",
+          "categoryCode": "WC"
+        }
+      ],
+      "credits": [
+        {
+          "id": "wc-cr-1",
+          "code": "WC Credit 1",
+          "name": "Water Efficient Plumbing Fixtures",
+          "maxPoints": 6,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-2",
+          "code": "WC Credit 2",
+          "name": "Landscape Design",
+          "maxPoints": 3,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-3",
+          "code": "WC Credit 3",
+          "name": "Management of Irrigation System",
+          "maxPoints": 2,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-4",
+          "code": "WC Credit 4",
+          "name": "Recycle & Reuse of Waste Water",
+          "maxPoints": 4,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-5",
+          "code": "WC Credit 5",
+          "name": "Water Quality",
+          "maxPoints": 1,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-6",
+          "code": "WC Credit 6",
+          "name": "Enhanced Rainwater Harvesting",
+          "maxPoints": 4,
+          "categoryCode": "WC"
+        },
+        {
+          "id": "wc-cr-7",
+          "code": "WC Credit 7",
+          "name": "Water Metering",
+          "maxPoints": 3,
+          "categoryCode": "WC"
+        }
+      ]
+    },
+    {
+      "id": "ee",
+      "code": "EE",
+      "name": "Energy Efficiency",
+      "possiblePoints": 20,
+      "mandatoryRequirements": [
+        {
+          "id": "ee-mr-1",
+          "code": "EE MR 1",
+          "name": "HCFC Free Equipment",
+          "categoryCode": "EE"
+        },
+        {
+          "id": "ee-mr-2",
+          "code": "EE MR 2",
+          "name": "Minimum Energy Performance",
+          "categoryCode": "EE"
+        }
+      ],
+      "credits": [
+        {
+          "id": "ee-cr-1",
+          "code": "EE Credit 1",
+          "name": "Enhanced Energy Performance",
+          "maxPoints": 10,
+          "categoryCode": "EE"
+        },
+        {
+          "id": "ee-cr-2",
+          "code": "EE Credit 2",
+          "name": "Alternate Water Heating System",
+          "maxPoints": 3,
+          "categoryCode": "EE"
+        },
+        {
+          "id": "ee-cr-3",
+          "code": "EE Credit 3",
+          "name": "On-site Renewable Energy - Common Area Lighting",
+          "maxPoints": 4,
+          "categoryCode": "EE"
+        },
+        {
+          "id": "ee-cr-4",
+          "code": "EE Credit 4",
+          "name": "Energy Efficiency in Common Area Equipment",
+          "maxPoints": 1,
+          "categoryCode": "EE"
+        },
+        {
+          "id": "ee-cr-5",
+          "code": "EE Credit 5",
+          "name": "Integrated Energy Monitoring System",
+          "maxPoints": 2,
+          "categoryCode": "EE"
+        }
+      ]
+    },
+    {
+      "id": "mr",
+      "code": "MR",
+      "name": "Materials and Resources",
+      "possiblePoints": 18,
+      "mandatoryRequirements": [
+        {
+          "id": "mr-mr-1",
+          "code": "MR MR 1",
+          "name": "Separation of House-hold Waste",
+          "categoryCode": "MR"
+        }
+      ],
+      "credits": [
+        {
+          "id": "mr-cr-1",
+          "code": "MR Credit 1",
+          "name": "Green Procurement Policy",
+          "maxPoints": 1,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-2",
+          "code": "MR Credit 2",
+          "name": "Optimisation on Structural Design",
+          "maxPoints": 1,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-3",
+          "code": "MR Credit 3",
+          "name": "Certified Green Products",
+          "maxPoints": 5,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-4",
+          "code": "MR Credit 4",
+          "name": "Local Materials",
+          "maxPoints": 2,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-5",
+          "code": "MR Credit 5",
+          "name": "Eco Friendly Wood Based Materials",
+          "maxPoints": 2,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-6",
+          "code": "MR Credit 6",
+          "name": "Alternative Construction Material",
+          "maxPoints": 2,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-7",
+          "code": "MR Credit 7",
+          "name": "Handling of Construction & Demolition Waste",
+          "maxPoints": 2,
+          "categoryCode": "MR"
+        },
+        {
+          "id": "mr-cr-8",
+          "code": "MR Credit 8",
+          "name": "Organic Waste Treatment Post Occupancy",
+          "maxPoints": 3,
+          "categoryCode": "MR"
+        }
+      ]
+    },
+    {
+      "id": "rhw",
+      "code": "RHW",
+      "name": "Resident Health & Wellbeing",
+      "possiblePoints": 14,
+      "mandatoryRequirements": [
+        {
+          "id": "rhw-mr-1",
+          "code": "RHW MR 1",
+          "name": "Minimum Daylighting, 50%",
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-mr-2",
+          "code": "RHW MR 2",
+          "name": "Ventilation Design",
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-mr-3",
+          "code": "RHW MR 3",
+          "name": "No Smoking Policy",
+          "categoryCode": "RHW"
+        }
+      ],
+      "credits": [
+        {
+          "id": "rhw-cr-1",
+          "code": "RHW Credit 1",
+          "name": "Enhanced Daylighting",
+          "maxPoints": 2,
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-cr-2",
+          "code": "RHW Credit 2",
+          "name": "Enhanced Ventilation Design",
+          "maxPoints": 2,
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-cr-3",
+          "code": "RHW Credit 3",
+          "name": "Cross Ventilation",
+          "maxPoints": 4,
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-cr-4",
+          "code": "RHW Credit 4",
+          "name": "Connectivity to Exteriors",
+          "maxPoints": 2,
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-cr-5",
+          "code": "RHW Credit 5",
+          "name": "Low VOC Materials, Paints & Adhesives",
+          "maxPoints": 2,
+          "categoryCode": "RHW"
+        },
+        {
+          "id": "rhw-cr-6",
+          "code": "RHW Credit 6",
+          "name": "Facility for Physical Wellbeing",
+          "maxPoints": 2,
+          "categoryCode": "RHW"
+        }
+      ]
+    },
+    {
+      "id": "id",
+      "code": "ID",
+      "name": "Innovation & Design",
+      "possiblePoints": 5,
+      "mandatoryRequirements": [],
+      "credits": [
+        {
+          "id": "id-cr-1",
+          "code": "ID Credit 1.1-1.2",
+          "name": "Innovation",
+          "maxPoints": 2,
+          "categoryCode": "ID"
+        },
+        {
+          "id": "id-cr-2",
+          "code": "ID Credit 2.1-2.2",
+          "name": "Exemplary Performance",
+          "maxPoints": 2,
+          "categoryCode": "ID"
+        },
+        {
+          "id": "id-cr-3",
+          "code": "ID Credit 3",
+          "name": "IGBC Accredited Professional",
+          "maxPoints": 1,
+          "categoryCode": "ID"
+        }
+      ]
+    }
+  ],
+  "certificationLevels": [
+    {
+      "level": "certified",
+      "minPoints": 40,
+      "maxPoints": 49,
+      "label": "Certified",
+      "color": "#78716c"
+    },
+    {
+      "level": "silver",
+      "minPoints": 50,
+      "maxPoints": 59,
+      "label": "Silver",
+      "color": "#94a3b8"
+    },
+    {
+      "level": "gold",
+      "minPoints": 60,
+      "maxPoints": 74,
+      "label": "Gold",
+      "color": "#fbbf24"
+    },
+    {
+      "level": "platinum",
+      "minPoints": 75,
+      "maxPoints": 100,
+      "label": "Platinum",
+      "color": "#22c55e"
+    }
+  ],
+  "totalPossiblePoints": 100
+}

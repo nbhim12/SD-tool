@@ -1,24 +1,36 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Layout, CreditsTable } from './components';
 import { useCategories, useScenario } from './hooks';
 import { useScenarioStore } from './store';
 
 function App() {
   const { isLoading: categoriesLoading } = useCategories();
-  const { create } = useScenario();
-  const { currentScenario, selectedCategoryCode, categories, error: categoriesError, getCategoryInput } = useScenarioStore();
+  const { loadScenarios, loadScenario, createNew } = useScenario();
+  const { currentScenario, selectedCategoryCode, categories, scenarios, error: categoriesError, getCategoryInput } = useScenarioStore();
+  const initialized = useRef(false);
 
-  // Create new scenario if none exists after categories load
+  // Load existing scenarios and set up initial state
   useEffect(() => {
-    if (categories.length > 0 && !currentScenario) {
-      create({
-        name: 'Untitled Scenario',
-        projectName: 'New Project',
-        projectType: 'Residential',
-        targetCertificationLevel: 'gold'
+    if (categories.length > 0 && !initialized.current) {
+      initialized.current = true;
+      loadScenarios().then(() => {
+        // After loading scenarios, check if we should load one or create new
       });
     }
-  }, [categories.length, currentScenario, create]);
+  }, [categories.length, loadScenarios]);
+
+  // Once scenarios are loaded, load the most recent one or create a blank local scenario
+  useEffect(() => {
+    if (categories.length > 0 && !currentScenario && initialized.current) {
+      if (scenarios.length > 0) {
+        // Load the most recent scenario
+        loadScenario(scenarios[0]._id);
+      } else {
+        // Create a local-only scenario (not persisted until user saves)
+        createNew();
+      }
+    }
+  }, [categories.length, currentScenario, scenarios, loadScenario, createNew]);
 
   const selectedCategory = categories.find(c => c.code === selectedCategoryCode);
   const categoryInput = selectedCategoryCode ? getCategoryInput(selectedCategoryCode) : undefined;

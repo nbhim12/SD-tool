@@ -6,9 +6,9 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 
 - **Frontend:** React 19 + TypeScript + Vite + Tailwind CSS
 - **Backend:** Node.js + Express + TypeScript
-- **Database:** MongoDB + Mongoose
+- **Database:** MongoDB (Atlas or Local) + Mongoose
 - **State Management:** Zustand
-- **PDF Generation:** PDFKit
+- **PDF Generation:** jsPDF + jspdf-autotable
 
 ## 📁 Project Structure
 
@@ -19,8 +19,7 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 │   │   ├── hooks/          # Custom React Hooks
 │   │   ├── services/       # API Services
 │   │   ├── store/          # Zustand State Store
-│   │   ├── types/          # TypeScript Types
-│   │   └── utils/          # Utility Functions
+│   │   └── utils/          # Utility Functions (PDF export)
 │   └── package.json
 │
 ├── server/                 # Express Backend
@@ -28,8 +27,8 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 │   │   ├── controllers/    # Route Controllers
 │   │   ├── models/         # Mongoose Models
 │   │   ├── routes/         # API Routes
-│   │   ├── services/       # Business Logic
-│   │   └── utils/          # Utility Functions
+│   │   ├── config/         # Database Configuration
+│   │   └── index.ts        # Server Entry Point
 │   └── package.json
 │
 ├── shared/                 # Shared Code
@@ -43,43 +42,129 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 
 ### Prerequisites
 
-- Node.js >= 18.0.0
-- MongoDB (local or Atlas)
-- npm or yarn
+- **Node.js** >= 18.0.0
+- **MongoDB** - Choose one:
+  - [MongoDB Atlas](https://www.mongodb.com/atlas) (Cloud - Recommended for quick setup)
+  - MongoDB Community Server (Local installation)
+- **npm** (comes with Node.js)
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd SD-tool
-   ```
+#### 1. Clone the repository
 
-2. **Install dependencies**
-   ```bash
-   npm run install:all
-   ```
+```bash
+git clone <repository-url>
+cd SD-tool
+```
 
-3. **Set up environment variables**
-   ```bash
-   # Server
-   cp server/.env.example server/.env
-   # Edit server/.env with your MongoDB URI
-   ```
+#### 2. Install all dependencies
 
-4. **Seed the database (optional)**
-   ```bash
-   npm run seed
-   ```
+```bash
+# Install root, client, and server dependencies
+npm install
+cd client && npm install && cd ..
+cd server && npm install && cd ..
+```
 
-5. **Start development servers**
-   ```bash
-   npm run dev
-   ```
+Or use the convenience script:
+```bash
+npm run install:all
+```
 
-   This will start:
-   - Frontend: http://localhost:5173
-   - Backend: http://localhost:5000
+#### 3. Configure MongoDB
+
+**Option A: MongoDB Atlas (Cloud - Recommended)**
+
+1. Create a free account at [MongoDB Atlas](https://www.mongodb.com/atlas)
+2. Create a new cluster (free tier available)
+3. Click "Connect" → "Connect your application"
+4. Copy the connection string
+
+**Option B: Local MongoDB**
+
+1. Install [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+2. Start MongoDB service
+3. Use connection string: `mongodb://localhost:27017/igbc-tool`
+
+#### 4. Set up environment variables
+
+Create the server environment file:
+
+```bash
+# Create .env file in server directory
+cd server
+```
+
+Create `server/.env` with the following content:
+
+```env
+# MongoDB Connection
+# For Atlas: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/igbc-tool?retryWrites=true&w=majority
+# For Local: mongodb://localhost:27017/igbc-tool
+MONGODB_URI=your_mongodb_connection_string_here
+
+# Server Port (optional, defaults to 5000)
+PORT=5000
+
+# Node Environment
+NODE_ENV=development
+```
+
+> ⚠️ **Important:** Replace `your_mongodb_connection_string_here` with your actual MongoDB connection string. For Atlas, make sure to replace `<password>` with your database user password.
+
+#### 5. Seed the database (required for first run)
+
+```bash
+cd server
+npm run seed
+```
+
+This populates the database with IGBC categories, credits, and certification levels.
+
+#### 6. Start the application
+
+**Development Mode (with hot reload):**
+
+Open **two terminal windows**:
+
+```bash
+# Terminal 1 - Backend Server
+cd server
+npm run dev
+```
+
+```bash
+# Terminal 2 - Frontend Client
+cd client
+npm run dev
+```
+
+**Or run both from root:**
+```bash
+npm run dev
+```
+
+#### 7. Access the application
+
+- **Frontend:** http://localhost:5173
+- **Backend API:** http://localhost:5000
+- **Health Check:** http://localhost:5000/api/health
+
+### Verify Installation
+
+1. Open http://localhost:5000/api/health - should return `{"status":"ok"}`
+2. Open http://localhost:5173 - should display the IGBC Tool interface
+3. Categories should load in the tab navigation
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| `ECONNREFUSED` on API calls | Ensure backend server is running (`npm run dev` in server folder) |
+| MongoDB connection failed | Check your `MONGODB_URI` in `.env`, ensure Atlas IP whitelist includes your IP |
+| Port 5000 already in use | Change `PORT` in `.env` or stop the conflicting process |
+| CORS errors | Backend accepts requests from ports 5173 and 5174 by default |
+| Categories not loading | Run `npm run seed` in server folder to populate database |
 
 ## 📊 IGBC Green Homes Categories
 
@@ -117,14 +202,16 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 
 ## 📝 Features
 
-- [x] Project structure & setup
-- [ ] Category navigation with tabs
-- [ ] Credit display with point distribution
-- [ ] Yes/Maybe/No point allocation
-- [ ] Notes per credit
-- [ ] Certification level selection
-- [ ] Save/Load scenarios
-- [ ] PDF export
+- [x] Project structure & monorepo setup
+- [x] Category navigation with tabs
+- [x] Credit display with point distribution
+- [x] Yes/Maybe/No point allocation
+- [x] Notes per credit
+- [x] Mandatory requirements tracking
+- [x] Real-time points calculation
+- [x] Certification level display
+- [x] Save/Load scenarios
+- [x] PDF export with detailed report
 
 ## 🎯 Design Decisions
 
@@ -132,6 +219,30 @@ An interactive feasibility assessment tool for IGBC Green Homes Certification, h
 2. **Zustand for State:** Lightweight and TypeScript-friendly
 3. **Tab Navigation:** Top navigation for categories as per requirements
 4. **Responsive Design:** Mobile-first approach with Tailwind CSS
+5. **Client-side PDF:** Uses jsPDF for browser-based PDF generation
+
+## 🛠️ Available Scripts
+
+### Root Directory
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start both client and server in development mode |
+| `npm run install:all` | Install dependencies for all packages |
+
+### Server (`/server`)
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start server with hot-reload (ts-node-dev) |
+| `npm run build` | Build TypeScript to JavaScript |
+| `npm run seed` | Seed database with IGBC data |
+| `npm start` | Start production server |
+
+### Client (`/client`)
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start Vite dev server |
+| `npm run build` | Build for production |
+| `npm run preview` | Preview production build |
 
 ## 📄 License
 

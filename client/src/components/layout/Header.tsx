@@ -1,6 +1,7 @@
 import { useScenarioStore } from '../../store';
 import { CertificationLevelSelector } from './CertificationLevelSelector';
 import { ScenarioActions } from '../scenario';
+import { ExportButton } from '../export';
 
 export function Header() {
   const { currentScenario, isSaving } = useScenarioStore();
@@ -56,6 +57,8 @@ export function Header() {
           {/* Scenario Actions & Save Status */}
           <div className="flex items-center gap-4">
             <ScenarioActions />
+            <div className="h-6 w-px bg-gray-200" />
+            <ExportButton />
             
             {isSaving && (
               <div className="flex items-center gap-2 text-sm text-gray-500">

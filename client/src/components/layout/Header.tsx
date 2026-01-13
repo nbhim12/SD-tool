@@ -1,5 +1,6 @@
 import { useScenarioStore } from '../../store';
 import { CertificationLevelSelector } from './CertificationLevelSelector';
+import { ScenarioActions } from '../scenario';
 
 export function Header() {
   const { currentScenario, isSaving } = useScenarioStore();
@@ -33,7 +34,7 @@ export function Header() {
             </div>
           </div>
 
-          {/* Project Info */}
+          {/* Project Info & Certification */}
           <div className="hidden md:flex items-center gap-6">
             {currentScenario && (
               <>
@@ -52,8 +53,10 @@ export function Header() {
             <CertificationLevelSelector />
           </div>
 
-          {/* Save Status */}
-          <div className="flex items-center gap-3">
+          {/* Scenario Actions & Save Status */}
+          <div className="flex items-center gap-4">
+            <ScenarioActions />
+            
             {isSaving && (
               <div className="flex items-center gap-2 text-sm text-gray-500">
                 <svg

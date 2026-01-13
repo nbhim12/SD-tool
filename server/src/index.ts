@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { connectDB } from './config';
+import { categoryRoutes, scenarioRoutes } from './routes';
 
 // Load environment variables
 dotenv.config();
@@ -25,9 +26,9 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// TODO: Add routes in PR 3
-// app.use('/api/categories', categoryRoutes);
-// app.use('/api/scenarios', scenarioRoutes);
+// API Routes
+app.use('/api/categories', categoryRoutes);
+app.use('/api/scenarios', scenarioRoutes);
 
 // Start server
 const startServer = async () => {
@@ -36,11 +37,11 @@ const startServer = async () => {
     await connectDB();
     
     app.listen(PORT, () => {
-      console.log( Server running on http://localhost:\);
-      console.log( Health check: http://localhost:\/api/health);
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`📋 Health check: http://localhost:${PORT}/api/health`);
     });
   } catch (error) {
-    console.error(' Failed to start server:', error);
+    console.error('❌ Failed to start server:', error);
     process.exit(1);
   }
 };

@@ -102,8 +102,7 @@ const ScenarioSchema = new Schema<IScenario>({
   }
 });
 
-// Index for faster queries
-ScenarioSchema.index({ name: 1 });
+// Index for faster queries (name index is already created by unique: true)
 ScenarioSchema.index({ createdAt: -1 });
 
 export const Scenario = mongoose.model<IScenario>('Scenario', ScenarioSchema);

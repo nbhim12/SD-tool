@@ -22,6 +22,11 @@ interface ScenarioState {
   isSaving: boolean;
   error: string | null;
   
+  // Modal State
+  loadModalOpen: boolean;
+  saveModalOpen: boolean;
+  saveAsModalOpen: boolean;
+  
   // Actions - Data Loading
   setCategories: (categories: Category[]) => void;
   setCertificationLevels: (levels: CertificationThreshold[]) => void;
@@ -42,6 +47,11 @@ interface ScenarioState {
   setSaving: (saving: boolean) => void;
   setError: (error: string | null) => void;
   
+  // Actions - Modal State
+  setLoadModalOpen: (open: boolean) => void;
+  setSaveModalOpen: (open: boolean) => void;
+  setSaveAsModalOpen: (open: boolean) => void;
+  
   // Computed helpers
   getCategoryInput: (categoryCode: CategoryCode) => CategoryInput | undefined;
   getTotalPoints: () => { yes: number; maybe: number; no: number };
@@ -61,6 +71,9 @@ export const useScenarioStore = create<ScenarioState>()(
       isLoading: false,
       isSaving: false,
       error: null,
+      loadModalOpen: false,
+      saveModalOpen: false,
+      saveAsModalOpen: false,
 
       // Data Loading Actions
       setCategories: (categories) => set({ categories }),
@@ -146,6 +159,11 @@ export const useScenarioStore = create<ScenarioState>()(
       setLoading: (loading) => set({ isLoading: loading }),
       setSaving: (saving) => set({ isSaving: saving }),
       setError: (error) => set({ error }),
+      
+      // Modal State Actions
+      setLoadModalOpen: (open) => set({ loadModalOpen: open }),
+      setSaveModalOpen: (open) => set({ saveModalOpen: open }),
+      setSaveAsModalOpen: (open) => set({ saveAsModalOpen: open }),
 
       // Computed Helpers
       getCategoryInput: (categoryCode) => {

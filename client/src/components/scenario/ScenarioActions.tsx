@@ -1,12 +1,13 @@
-import { useState } from 'react';
 import { SaveScenarioModal } from './SaveScenarioModal';
 import { LoadScenarioModal } from './LoadScenarioModal';
 import { useScenario } from '../../hooks';
+import { useScenarioStore } from '../../store';
 
 export function ScenarioActions() {
-  const [saveModalOpen, setSaveModalOpen] = useState(false);
-  const [saveAsModalOpen, setSaveAsModalOpen] = useState(false);
-  const [loadModalOpen, setLoadModalOpen] = useState(false);
+  const { 
+    loadModalOpen, saveModalOpen, saveAsModalOpen,
+    setLoadModalOpen, setSaveModalOpen, setSaveAsModalOpen 
+  } = useScenarioStore();
   const { createNew } = useScenario();
 
   const handleNew = () => {

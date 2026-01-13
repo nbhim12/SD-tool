@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useScenarioStore } from '../../store';
 import { useScenario } from '../../hooks';
+import { getAllScenarios } from '../../services';
 
 interface LoadScenarioModalProps {
   isOpen: boolean;
@@ -8,17 +9,26 @@ interface LoadScenarioModalProps {
 }
 
 export function LoadScenarioModal({ isOpen, onClose }: LoadScenarioModalProps) {
-  const { scenarios, currentScenario } = useScenarioStore();
-  const { loadScenarios, loadScenario, remove } = useScenario();
+  const { scenarios, currentScenario, setScenarios, setCurrentScenario } = useScenarioStore();
+  const { loadScenario, remove } = useScenario();
   
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
   useEffect(() => {
     if (isOpen) {
-      loadScenarios();
+      setIsFetching(true);
+      getAllScenarios()
+        .then((response) => {
+          if (response.success) {
+            setScenarios(response.data);
+          }
+        })
+        .catch((err) => console.error('Failed to load scenarios:', err))
+        .finally(() => setIsFetching(false));
     }
-  }, [isOpen, loadScenarios]);
+  }, [isOpen, setScenarios]);
 
   const handleLoad = async (id: string) => {
     setIsLoading(true);
@@ -32,9 +42,17 @@ export function LoadScenarioModal({ isOpen, onClose }: LoadScenarioModalProps) {
 
   const handleDelete = async (id: string) => {
     try {
+      // If deleting the current scenario, clear it first
+      if (currentScenario?._id === id) {
+        setCurrentScenario(null);
+      }
       await remove(id);
       setDeleteConfirm(null);
-      await loadScenarios();
+      // Refresh list after delete
+      const response = await getAllScenarios();
+      if (response.success) {
+        setScenarios(response.data);
+      }
     } catch (err) {
       console.error('Failed to delete scenario:', err);
     }
@@ -77,7 +95,12 @@ export function LoadScenarioModal({ isOpen, onClose }: LoadScenarioModalProps) {
 
         {/* Body */}
         <div className="flex-1 overflow-y-auto p-4">
-          {scenarios.length === 0 ? (
+          {isFetching ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mx-auto"></div>
+              <p className="text-gray-500 mt-4">Loading scenarios...</p>
+            </div>
+          ) : scenarios.length === 0 ? (
             <div className="text-center py-12">
               <svg className="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />

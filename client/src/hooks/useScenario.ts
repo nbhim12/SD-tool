@@ -62,6 +62,17 @@ export const useScenario = () => {
     }
   }, [setCurrentScenario, setLoading, setError]);
 
+  // Create a blank new scenario (local only, not persisted until save)
+  const createNew = useCallback(() => {
+    setCurrentScenario({
+      name: 'Untitled Scenario',
+      projectName: 'New Project',
+      projectType: 'Residential',
+      targetCertificationLevel: 'gold',
+      categories: []
+    });
+  }, [setCurrentScenario]);
+
   // Create a new scenario
   const create = useCallback(async (payload: CreateScenarioPayload) => {
     setSaving(true);
@@ -181,6 +192,7 @@ export const useScenario = () => {
     error,
     loadScenarios,
     loadScenario,
+    createNew,
     create,
     update,
     save,

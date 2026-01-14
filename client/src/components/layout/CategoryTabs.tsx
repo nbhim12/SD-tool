@@ -15,7 +15,7 @@ export function CategoryTabs() {
 
   return (
     <div className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex space-x-1 overflow-x-auto py-2" aria-label="Categories">
           {CATEGORY_TABS.map((tab) => {
             const isSelected = selectedCategoryCode === tab.code;
@@ -28,15 +28,16 @@ export function CategoryTabs() {
                 key={tab.code}
                 onClick={() => setSelectedCategory(tab.code)}
                 className={`
-                  flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium
-                  transition-all duration-200 whitespace-nowrap
+                  flex items-center gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-lg text-sm font-medium
+                  transition-all duration-200 whitespace-nowrap flex-shrink-0
                   ${isSelected
                     ? 'bg-green-50 text-green-700 ring-1 ring-green-200'
                     : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }
                 `}
               >
-                <span className="hidden sm:inline">{tab.name}</span>
+                <span className="hidden lg:inline">{tab.name}</span>
+                <span className="hidden sm:inline lg:hidden">{tab.shortName}</span>
                 <span className="sm:hidden">{tab.code}</span>
                 <span
                   className={`

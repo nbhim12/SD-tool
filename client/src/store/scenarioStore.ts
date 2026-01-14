@@ -97,16 +97,38 @@ export const useScenarioStore = create<ScenarioState>()(
         set((state) => {
           if (!state.currentScenario) return state;
           
-          const categories = state.currentScenario.categories.map((cat) => {
-            if (cat.categoryCode !== categoryCode) return cat;
-            
-            const mandatoryCompliance = cat.mandatoryCompliance.map((mc) => {
-              if (mc.requirementId !== requirementId) return mc;
-              return { ...mc, isCompliant, notes: notes ?? mc.notes };
+          let categories = [...state.currentScenario.categories];
+          const existingCatIndex = categories.findIndex(c => c.categoryCode === categoryCode);
+          
+          if (existingCatIndex === -1) {
+            // Auto-initialize category input if it doesn't exist
+            categories.push({
+              categoryCode,
+              mandatoryCompliance: [{ requirementId, isCompliant, notes: notes ?? '' }],
+              creditDistributions: []
             });
+          } else {
+            const cat = categories[existingCatIndex];
+            const existingCompIndex = cat.mandatoryCompliance.findIndex(mc => mc.requirementId === requirementId);
             
-            return { ...cat, mandatoryCompliance };
-          });
+            if (existingCompIndex === -1) {
+              // Auto-initialize mandatory compliance if it doesn't exist
+              categories[existingCatIndex] = {
+                ...cat,
+                mandatoryCompliance: [
+                  ...cat.mandatoryCompliance,
+                  { requirementId, isCompliant, notes: notes ?? '' }
+                ]
+              };
+            } else {
+              // Update existing mandatory compliance
+              const mandatoryCompliance = cat.mandatoryCompliance.map((mc) => {
+                if (mc.requirementId !== requirementId) return mc;
+                return { ...mc, isCompliant, notes: notes ?? mc.notes };
+              });
+              categories[existingCatIndex] = { ...cat, mandatoryCompliance };
+            }
+          }
           
           return {
             currentScenario: { ...state.currentScenario, categories }
@@ -118,16 +140,38 @@ export const useScenarioStore = create<ScenarioState>()(
         set((state) => {
           if (!state.currentScenario) return state;
           
-          const categories = state.currentScenario.categories.map((cat) => {
-            if (cat.categoryCode !== categoryCode) return cat;
-            
-            const creditDistributions = cat.creditDistributions.map((cd) => {
-              if (cd.creditId !== creditId) return cd;
-              return { ...cd, [field]: Math.max(0, value) };
+          let categories = [...state.currentScenario.categories];
+          const existingCatIndex = categories.findIndex(c => c.categoryCode === categoryCode);
+          
+          if (existingCatIndex === -1) {
+            // Auto-initialize category input if it doesn't exist
+            categories.push({
+              categoryCode,
+              mandatoryCompliance: [],
+              creditDistributions: [{ creditId, yesPoints: 0, maybePoints: 0, noPoints: 0, notes: '', [field]: Math.max(0, value) }]
             });
+          } else {
+            const cat = categories[existingCatIndex];
+            const existingDistIndex = cat.creditDistributions.findIndex(cd => cd.creditId === creditId);
             
-            return { ...cat, creditDistributions };
-          });
+            if (existingDistIndex === -1) {
+              // Auto-initialize credit distribution if it doesn't exist
+              categories[existingCatIndex] = {
+                ...cat,
+                creditDistributions: [
+                  ...cat.creditDistributions,
+                  { creditId, yesPoints: 0, maybePoints: 0, noPoints: 0, notes: '', [field]: Math.max(0, value) }
+                ]
+              };
+            } else {
+              // Update existing credit distribution
+              const creditDistributions = cat.creditDistributions.map((cd) => {
+                if (cd.creditId !== creditId) return cd;
+                return { ...cd, [field]: Math.max(0, value) };
+              });
+              categories[existingCatIndex] = { ...cat, creditDistributions };
+            }
+          }
           
           return {
             currentScenario: { ...state.currentScenario, categories }
@@ -139,16 +183,38 @@ export const useScenarioStore = create<ScenarioState>()(
         set((state) => {
           if (!state.currentScenario) return state;
           
-          const categories = state.currentScenario.categories.map((cat) => {
-            if (cat.categoryCode !== categoryCode) return cat;
-            
-            const creditDistributions = cat.creditDistributions.map((cd) => {
-              if (cd.creditId !== creditId) return cd;
-              return { ...cd, notes };
+          let categories = [...state.currentScenario.categories];
+          const existingCatIndex = categories.findIndex(c => c.categoryCode === categoryCode);
+          
+          if (existingCatIndex === -1) {
+            // Auto-initialize category input if it doesn't exist
+            categories.push({
+              categoryCode,
+              mandatoryCompliance: [],
+              creditDistributions: [{ creditId, yesPoints: 0, maybePoints: 0, noPoints: 0, notes }]
             });
+          } else {
+            const cat = categories[existingCatIndex];
+            const existingDistIndex = cat.creditDistributions.findIndex(cd => cd.creditId === creditId);
             
-            return { ...cat, creditDistributions };
-          });
+            if (existingDistIndex === -1) {
+              // Auto-initialize credit distribution if it doesn't exist
+              categories[existingCatIndex] = {
+                ...cat,
+                creditDistributions: [
+                  ...cat.creditDistributions,
+                  { creditId, yesPoints: 0, maybePoints: 0, noPoints: 0, notes }
+                ]
+              };
+            } else {
+              // Update existing credit distribution
+              const creditDistributions = cat.creditDistributions.map((cd) => {
+                if (cd.creditId !== creditId) return cd;
+                return { ...cd, notes };
+              });
+              categories[existingCatIndex] = { ...cat, creditDistributions };
+            }
+          }
           
           return {
             currentScenario: { ...state.currentScenario, categories }

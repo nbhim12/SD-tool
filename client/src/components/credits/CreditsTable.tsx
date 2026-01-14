@@ -39,36 +39,36 @@ export function CreditsTable({ category, categoryInput }: CreditsTableProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Category Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-gray-900">{category.name}</h2>
-          <p className="text-sm text-gray-500 mt-1">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900">{category.name}</h2>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">
             {category.possiblePoints} possible points • {category.credits.length} credits
           </p>
         </div>
         
         {/* Category Points Summary */}
-        <div className="flex items-center gap-4 bg-gray-50 rounded-lg px-4 py-2">
+        <div className="flex items-center gap-3 sm:gap-4 bg-gray-50 rounded-lg px-3 sm:px-4 py-2">
           <div className="text-center">
-            <p className="text-lg font-bold text-green-600">{points.yes}</p>
-            <p className="text-xs text-gray-500">Yes</p>
+            <p className="text-base sm:text-lg font-bold text-green-600">{points.yes}</p>
+            <p className="text-[10px] sm:text-xs text-gray-500">Yes</p>
           </div>
           <div className="text-center">
-            <p className="text-lg font-bold text-amber-500">{points.maybe}</p>
-            <p className="text-xs text-gray-500">Maybe</p>
+            <p className="text-base sm:text-lg font-bold text-amber-500">{points.maybe}</p>
+            <p className="text-[10px] sm:text-xs text-gray-500">Maybe</p>
           </div>
           <div className="text-center">
-            <p className="text-lg font-bold text-gray-400">{points.no}</p>
-            <p className="text-xs text-gray-500">No</p>
+            <p className="text-base sm:text-lg font-bold text-gray-400">{points.no}</p>
+            <p className="text-[10px] sm:text-xs text-gray-500">No</p>
           </div>
-          <div className="h-8 w-px bg-gray-200" />
+          <div className="h-6 sm:h-8 w-px bg-gray-200" />
           <div className="text-center">
-            <p className="text-lg font-bold text-blue-600">
+            <p className="text-base sm:text-lg font-bold text-blue-600">
               {category.possiblePoints - points.yes - points.maybe - points.no}
             </p>
-            <p className="text-xs text-gray-500">Unallocated</p>
+            <p className="text-[10px] sm:text-xs text-gray-500">Left</p>
           </div>
         </div>
       </div>

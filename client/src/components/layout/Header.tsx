@@ -8,7 +8,7 @@ export function Header() {
 
   return (
     <header className="bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo & Title */}
           <div className="flex items-center gap-3">
@@ -31,7 +31,7 @@ export function Header() {
               <h1 className="text-lg font-semibold text-gray-900">
                 IGBC Green Homes
               </h1>
-              <p className="text-xs text-gray-500">Feasibility Tool v3.0</p>
+              {/* <p className="text-xs text-gray-500">Feasibility Tool v3.0</p> */}
             </div>
           </div>
 

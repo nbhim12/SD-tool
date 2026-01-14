@@ -21,7 +21,15 @@ export function CreditRow({ credit, distribution, onUpdate, onNotesUpdate }: Cre
 
   const handlePointChange = (field: 'yesPoints' | 'maybePoints' | 'noPoints', value: string) => {
     const numValue = parseInt(value) || 0;
-    const clampedValue = Math.max(0, Math.min(numValue, credit.maxPoints));
+    
+    // Calculate how much is already allocated in OTHER fields
+    const currentFieldValue = field === 'yesPoints' ? yesPoints : field === 'maybePoints' ? maybePoints : noPoints;
+    const otherFieldsTotal = allocatedPoints - currentFieldValue;
+    
+    // Max this field can be is maxPoints minus what's in other fields
+    const maxAllowed = credit.maxPoints - otherFieldsTotal;
+    const clampedValue = Math.max(0, Math.min(numValue, maxAllowed));
+    
     onUpdate(credit.id, field, clampedValue);
   };
 
@@ -51,7 +59,7 @@ export function CreditRow({ credit, distribution, onUpdate, onNotesUpdate }: Cre
         </td>
         
         {/* Yes Points */}
-        <td className="py-3 px-2">
+        <td className="py-3 px-1 sm:px-2">
           <input
             type="number"
             min="0"
@@ -59,14 +67,14 @@ export function CreditRow({ credit, distribution, onUpdate, onNotesUpdate }: Cre
             value={yesPoints || ''}
             onChange={(e) => handlePointChange('yesPoints', e.target.value)}
             placeholder="0"
-            className="w-16 px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
+            className="w-12 sm:w-14 lg:w-16 px-1 sm:px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
                        focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent
                        bg-green-50 text-green-700 placeholder-green-300"
           />
         </td>
         
         {/* Maybe Points */}
-        <td className="py-3 px-2">
+        <td className="py-3 px-1 sm:px-2">
           <input
             type="number"
             min="0"
@@ -74,14 +82,14 @@ export function CreditRow({ credit, distribution, onUpdate, onNotesUpdate }: Cre
             value={maybePoints || ''}
             onChange={(e) => handlePointChange('maybePoints', e.target.value)}
             placeholder="0"
-            className="w-16 px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
+            className="w-12 sm:w-14 lg:w-16 px-1 sm:px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
                        focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent
                        bg-amber-50 text-amber-700 placeholder-amber-300"
           />
         </td>
         
         {/* No Points */}
-        <td className="py-3 px-2">
+        <td className="py-3 px-1 sm:px-2">
           <input
             type="number"
             min="0"
@@ -89,7 +97,7 @@ export function CreditRow({ credit, distribution, onUpdate, onNotesUpdate }: Cre
             value={noPoints || ''}
             onChange={(e) => handlePointChange('noPoints', e.target.value)}
             placeholder="0"
-            className="w-16 px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
+            className="w-12 sm:w-14 lg:w-16 px-1 sm:px-2 py-1.5 text-center text-sm border border-gray-200 rounded-lg
                        focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent
                        bg-gray-100 text-gray-600 placeholder-gray-400"
           />
